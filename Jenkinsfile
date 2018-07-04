@@ -1,9 +1,11 @@
 pipeline {
         agent any
         stages {
-            stage('Test') {
+            stage('Build') {
+                agent { label 'docker' }
                 steps {
-                    echo 'Just for test...'
+                    def customImage = docker.build("nginx-lua-app:${env.BUILD_ID}", "./")
+                    customImage.push('latest')
                 }
             }
             stage('Another test') {
@@ -11,6 +13,5 @@ pipeline {
                     echo 'Seems work fine. Iam fuckd up'
                 }
             }
-
     }
 }
