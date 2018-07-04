@@ -1,5 +1,5 @@
 pipeline {
-	agent { jenkins-agent }
+	agent any
 		stage('Build') {
 		    agent { dockerfile true }
 			steps {
