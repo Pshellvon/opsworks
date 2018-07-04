@@ -4,12 +4,12 @@ pipeline {
 		    agent { dockerfile true }
 			steps {
                 node {
-                checkout scm
-                def customImage = docker.build("nginx-lua:${env.BUILD_ID}", "./nginx-lua/Dockerfile")
+                   checkout scm
+                   def customImage = docker.build("nginx-lua:${env.BUILD_ID}", "./nginx-lua/Dockerfile")
                 	}
 				}
 			}
-		}
+
 		stage('Dockerize') {
 			steps {
 				echo 'Do something else with docker container'
