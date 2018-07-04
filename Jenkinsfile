@@ -8,7 +8,7 @@ pipeline {
             }
             stage('Another test') {
                 steps {
-                    echo 'Another check'
+                    echo 'New Another check'
                 }
             }
 
