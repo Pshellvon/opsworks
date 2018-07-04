@@ -1,17 +1,13 @@
 pipeline {
-        agent any
+        agent { dockerfile true }
         stages {
-            stage('Build') {
+            stage('Push to repo') {
                 agent { label 'docker' }
                 steps {
-                    def customImage = docker.build("nginx-lua-app:${env.BUILD_ID}", "./")
-                    customImage.push('latest')
+                    docker.withRegistry('https://hub.docker.com', 'credentials-id') {
+                    push()
+                    }
                 }
             }
-            stage('Another test') {
-                steps {
-                    echo 'Seems work fine. Iam fuckd up'
-                }
-            }
-    }
+        }
 }
