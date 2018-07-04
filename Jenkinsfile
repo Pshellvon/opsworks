@@ -5,7 +5,7 @@ pipeline {
 			steps {
                 node {
                 checkout scm
-                def customImage = docker.build("nginx-lua:${env.BUILD_ID}, "./nginx-lua/Dockerfile"")
+                def customImage = docker.build("nginx-lua:${env.BUILD_ID}", "./nginx-lua/Dockerfile")
                 	}
 				}
 			}
