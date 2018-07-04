@@ -1,5 +1,5 @@
 pipeline {
-        agent { "label 'docker'", "dockerfile true" }
+        agent { node { label 'docker' }, "dockerfile true" }
         stages {
             stage('Push to repo') {
                 agent { label 'docker' }
