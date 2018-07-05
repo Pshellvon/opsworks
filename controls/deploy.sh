@@ -67,9 +67,9 @@ release_app() {
 
 curl_check() {
 
-    check_url="http://${EC2_IP}/"
-    http_response=$(curl --write-out %{http_code} --silent --output /dev/null ${check_url} )
-    echo "Deploy result: ${check_url} : ${http_response}"
+    get_instance_ip
+
+    curl --fail --silent --show-error http://${EC2_IP}/ > /dev/null
 
 }
 
