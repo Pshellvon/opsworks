@@ -14,7 +14,7 @@ export DOCKER_CONTAINER_NAME="opsapp"
 get_instance_ip() {
 
     EC2_IP=$(docker-machine ip $EC2_NAME | gawk 'BEGIN { RS = "[ \t\n]"; FS = "." } /^([0-9]+[.]){3}[0-9]+$/ && ! rshift(or(or($1, $2), or($3, $4)), 8) { print ; exit; }')
-    #echo ${EC2_IP}
+    echo ${EC2_IP}
 
 }
 
@@ -48,8 +48,6 @@ install_docker_machine() {
 }
 
 release_app() {
-
-    check_docker_machine_installed
 
     eval $(docker-machine env ${EC2_NAME})
     docker pull ${DOCKER_IMAGE}
@@ -93,16 +91,15 @@ check_if_secrets_passed() {
 
 check_if_ec2_launched_and_do_all_things() {
 
-    docker-machine ls | grep "${EC2_NAME}" &> /dev/null
-    if [ $? == 1 ]; then
-        echo "I cant see EC2 instance. Running it..."
-        run_instance
-        release_app
-    else
+if [[ $(docker-machine ls | grep "${EC2_NAME}" = "${EC2_NAME}"  ) ]]; then
         echo "Nice, instance running: ${EC2_IP}"
         echo "Releasing app now!"
         release_app
-    fi
+else
+        echo "I cant see EC2 instance. Running it..."
+        run_instance
+        release_app
+fi
 
 }
 
