@@ -60,6 +60,8 @@ release_app() {
 
     curl_check
 
+    exit 0
+
 }
 
 curl_check() {
@@ -95,6 +97,7 @@ check_if_ec2_launched_and_do_all_things() {
     if [ $? == 1 ]; then
         echo "I cant see EC2 instance. Running it..."
         run_instance
+        release_app
     else
         echo "Nice, instance running: ${EC2_IP}"
         echo "Releasing app now!"
@@ -107,6 +110,6 @@ check_if_ec2_launched_and_do_all_things() {
 check_if_secrets_passed
 check_docker_machine_installed
 get_instance_ip
-set -x
+#set -x
 check_if_ec2_launched_and_do_all_things
-set +x
+#set +x
