@@ -68,7 +68,7 @@ curl_check() {
 
     check_url="http://${EC2_IP}/"
     http_response=$(curl --write-out %{http_code} --silent --output /dev/null ${check_url} )
-    echo "After deploy server says: ${http_response}"
+    echo "Deploy result: ${check_url} : ${http_response}"
 
 }
 
