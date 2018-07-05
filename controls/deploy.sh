@@ -69,7 +69,7 @@ curl_check() {
 
     get_instance_ip
 
-    curl --fail --silent --show-error http://${EC2_IP}/ > /dev/null
+    curl --fail --show-error http://${EC2_IP}/ > /dev/null
 
 }
 
@@ -94,7 +94,7 @@ check_if_secrets_passed() {
 
 check_if_ec2_instance_go_away() {
 
-    if [[ $(docker-machine ls | grep -v Timeout ) ]]; then
+    if [[ $(docker-machine ls | grep Timeout ) ]]; then
         echo "You have lost ec2 instance."
         yes | docker-machine rm ${EC2_NAME}
     fi
