@@ -21,6 +21,9 @@ get_instance_ip() {
 run_instance() {
 
 set -x
+
+    check_if_ec2_instance_go_away
+
     echo "Launching EC2 instance"
     docker-machine create \
         --driver amazonec2 \
@@ -91,16 +94,14 @@ check_if_secrets_passed() {
 
 check_if_ec2_instance_go_away() {
 
-if [[ $(docker-machine ls | grep Timeout ) ]]; then
+if [[ $(docker-machine ls | grep -v Timeout ) ]]; then
         echo "You have lost ec2 instance."
         docker-machine rm ${EC2_NAME}
-fi
-        check_if_ec2_launched_and_do_all_things
 }
 
 check_if_ec2_launched_and_do_all_things() {
 
-if [[ $(docker-machine ls | grep "${EC2_NAME}" ) ]]; then
+if [[ $(docker-machine ls | grep "${EC2_NAME}" | grep -v Error ) ]]; then
         echo "Nice, instance running: ${EC2_IP}"
         echo "Releasing app now!"
         release_app
