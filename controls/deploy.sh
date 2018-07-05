@@ -20,6 +20,7 @@ get_instance_ip() {
 
 run_instance() {
 
+set -x
     echo "Launching EC2 instance"
     docker-machine create \
         --driver amazonec2 \
@@ -33,6 +34,7 @@ run_instance() {
 
     echo "Waiting until public IP is accessible"
     sleep 10
+set +x
 
 }
 
@@ -105,4 +107,6 @@ check_if_ec2_launched_and_do_all_things() {
 check_if_secrets_passed
 check_docker_machine_installed
 get_instance_ip
+set -x
 check_if_ec2_launched_and_do_all_things
+set +x

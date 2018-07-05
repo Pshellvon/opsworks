@@ -31,8 +31,8 @@ pipeline {
 
                 steps {
                     script {
-                        sh 'chmod +x ./controls/run_machine.sh'
-                        sh './controls/run_machine.sh ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY}'
+                        sh 'chmod +x ./controls/deploy.sh'
+                        sh './controls/deploy.sh ${AWS_ACCESS_KEY_ID} ${AWS_SECRET_ACCESS_KEY}'
                         }
                     }
                 }
