@@ -89,6 +89,15 @@ check_if_secrets_passed() {
 
 }
 
+check_if_ec2_instance_go_away() {
+
+if [[ $(docker-machine ls | grep Timeout ) ]]; then
+        echo "You have lost ec2 instance."
+        docker-machine rm ${EC2_NAME}
+fi
+        check_if_ec2_launched_and_do_all_things
+}
+
 check_if_ec2_launched_and_do_all_things() {
 
 if [[ $(docker-machine ls | grep "${EC2_NAME}" = "${EC2_NAME}"  ) ]]; then
@@ -108,5 +117,6 @@ check_if_secrets_passed
 check_docker_machine_installed
 get_instance_ip
 #set -x
+check_if_ec2_instance_go_away
 check_if_ec2_launched_and_do_all_things
 #set +x
