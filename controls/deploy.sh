@@ -69,7 +69,10 @@ curl_check() {
 
     get_instance_ip
 
-    curl --fail --silent --show-error http://${EC2_IP}/ > /dev/null
+    STATUSCODE=$(curl --silent --output /dev/stderr --write-out "%{http_code}" http://${EC2_IP}/)
+    if test $STATUSCODE -ne 200; then
+    exit 1
+    fi
 
 }
 
