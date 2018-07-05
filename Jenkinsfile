@@ -30,7 +30,7 @@ pipeline {
                 }
                 steps {
                     script {
-                        ./controls/run_machine.sh
+                        sh './controls/run_machine.sh'
                         }
                     }
                 }
