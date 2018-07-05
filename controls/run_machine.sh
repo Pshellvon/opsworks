@@ -33,7 +33,6 @@ run_instance() {
 
     echo "Waiting until public IP is accessible"
     sleep 10
-    check_if_ec2_launched_and_do_all_things
 
 }
 
@@ -90,13 +89,12 @@ check_if_secrets_passed() {
 
 check_if_ec2_launched_and_do_all_things() {
 
-    get_instance_ip
-
-    if [ -z "${EC2_IP}" ]; then
+    docker-machine ls | grep "${EC2_NAME}" &> /dev/null
+    if [ $? == 1 ]; then
         echo "I cant see EC2 instance. Running it..."
         run_instance
     else
-        echo "Nice, instance exist: ${EC2_IP}"
+        echo "Nice, instance running: ${EC2_IP}"
         echo "Releasing app now!"
         release_app
     fi
